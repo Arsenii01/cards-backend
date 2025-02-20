@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Электронная визитка</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            outline: none;
+            font-family: 'Fira Sans', 'Roboto', sans-serif;
+            font-weight: 400;
+            word-break: break-word;
+
+        }
+        /* Общие стили */
+        body {
+            margin: 0;
+            padding: 0;
+            background: #f5f5f5;
+        }
+        p {
+            margin: 0;
+            padding: 0;
+        }
+
+        .name {
+            font-size: 24px;
+            font-weight: 500;
+            line-height: 28px;
+            color: rgb(31, 31, 31);
+        }
+        .position {
+            font-size: 20px;
+            color: rgb(31, 31, 31);
+            margin-top: 12px;
+        }
+
+        .about-me {
+            font-size: 16px;
+            color: black;
+            margin-top: 12px;
+            white-space: pre-wrap;
+        }
+
+
+        .card-container {
+            max-width: 400px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        /* Верхняя часть с фотографией */
+        .card-header {
+            background: linear-gradient(135deg, #f36c3d 0%, #fe875d 100%);
+            text-align: center;
+            padding: 40px 20px 20px;
+            position: relative;
+        }
+        .avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #fff;
+            object-fit: cover;
+            object-position: center;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Блок с именем, должностью и описанием */
+        .info-block {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 30px;
+            padding: 0 20px;
+        }
+        .info-block p {
+            font-size: 14px;
+            color: #444;
+            margin-top: 10px;
+            line-height: 1.4;
+        }
+
+        /* Контакты */
+        .contacts {
+            padding: 20px;
+            border-top: 1px solid #eee;
+        }
+        .contact-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-icon {
+            width: 24px;
+            margin-right: 10px;
+            opacity: 0.7;
+        }
+        .contact-text {
+            font-size: 14px;
+            color: #333;
+            word-wrap: break-word;
+        }
+        .contact-link {
+            width: 100%;
+            padding: 12px 16px;
+            border-radius: 20px;
+            box-shadow: rgb(215, 215, 215) 0px 0px 16px 0px;
+            display: flex;
+            column-gap: 10px;
+            text-decoration: none;
+            transition: 0.3s;
+            margin-top: 16px;
+        }
+
+        .contact-link.hover:hover {
+            box-shadow: rgb(215, 215, 215) 0px 0px 4px 0px;
+        }
+
+        .contact-link span {
+            display: block;
+            font-size: 13px;
+            line-height: 1;
+            color: rgb(119, 119, 119);
+        }
+
+        .contact-link p {
+            font-size: 16px;
+            color: rgb(31, 31, 31);
+            margin-top: 5px;
+        }
+
+        .social-networks {
+            padding: 20px;
+            border-top: 1px solid #eee;
+            display: flex;
+            flex-wrap: wrap;
+            row-gap: 25px;
+            column-gap: 10px;
+            justify-content: center;
+        }
+        .social-title {
+            width: 100%;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            color: #444;
+            margin: 0;
+
+        }
+        .social-link {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: #f36c3d;
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+        .social-link:hover {
+            background: #fe875d;
+        }
+    </style>
+</head>
+<body>
+<div class="card-container">
+<!--    &lt;!&ndash; Верхняя часть с фоном и фотографией &ndash;&gt;-->
+<!--    <div class="card-header">-->
+<!--        <img class="avatar" th:src="${photoUrl}" alt="Фото"/>-->
+<!--    </div>-->
+
+    <!-- Основная информация -->
+    <div class="info-block">
+        <!-- Полное имя -->
+        <h1 class="name" th:text="${fullName}">Имя Фамилия</h1>
+        <!-- Должность (например, "Разработчик") -->
+        <h2 class="position" th:text="${position}">Должность</h2>
+        <!-- О себе -->
+        <p class="about-me" th:text="${aboutMe}">Краткое описание: кто вы, чем занимаетесь</p>
+    </div>
+
+    <!-- Контакты -->
+    <div class="contacts">
+        <!-- Телефон -->
+        <div class="contact-item" th:if="${phoneNumber != null and !#strings.isEmpty(phoneNumber)}">
+            <a class="contact-link hover" th:href="'tel:'+ ${phoneNumber}">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M14.1724 3.5C11.8681 3.5 10 5.38978 10 7.72093V32.2791C10 34.6102 11.8681 36.5 14.1724 36.5H26.3103C28.6147 36.5 30.4828 34.6102 30.4828 32.2791V7.72093C30.4828 5.38977 28.6147 3.5 26.3103 3.5H14.1724Z" fill="#FF633E66"></path>
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M10 7.72093C10 5.38978 11.8681 3.5 14.1724 3.5H26.3103C28.6147 3.5 30.4828 5.38977 30.4828 7.72093V32.2791C30.4828 34.6102 28.6147 36.5 26.3103 36.5H14.1724C11.8681 36.5 10 34.6102 10 32.2791V7.72093ZM14.1724 5.80233C13.125 5.80233 12.2759 6.66131 12.2759 7.72093V32.2791C12.2759 33.3387 13.125 34.1977 14.1724 34.1977H26.3103C27.3578 34.1977 28.2069 33.3387 28.2069 32.2791V7.72093C28.2069 6.66131 27.3578 5.80233 26.3103 5.80233H25.914C25.7225 7.95377 23.9352 9.63977 21.7586 9.63977H18.7241C16.5476 9.63977 14.7602 7.95377 14.5687 5.80233H14.1724ZM17.9651 29.5977C17.3366 29.5977 16.8271 30.113 16.8271 30.7488C16.8271 31.3846 17.3366 31.9 17.9651 31.9H22.5168C23.1453 31.9 23.6547 31.3846 23.6547 30.7488C23.6547 30.113 23.1453 29.5977 22.5168 29.5977H17.9651Z" fill="#FF633E"></path>
+                </svg>
+                <div>
+                    <span>Мобильный телефон</span>
+                    <p th:text="${phoneNumber}"></p>
+                </div>
+            </a>
+
+        </div>
+        <!-- Email -->
+        <div class="contact-item" th:if="${email != null and !#strings.isEmpty(email)}">
+            <a class="contact-link hover    " th:href="'mailto:' + ${email}">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M5.83333 8.5C5.3731 8.5 5 8.8731 5 9.33333V28.6667C5 30.0474 6.11929 31.1667 7.5 31.1667H32.1667C33.5474 31.1667 34.6667 30.0474 34.6667 28.6667V9.33333C34.6667 8.8731 34.2936 8.5 33.8333 8.5H5.83333Z" fill="#FF633E66"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M5.83336 8.5C5.49631 8.5 5.19244 8.70304 5.06346 9.01443C4.93447 9.32583 5.00577 9.68426 5.2441 9.92259L19.2441 23.9226C19.5695 24.248 20.0972 24.248 20.4226 23.9226L34.4226 9.92259C34.6609 9.68426 34.7322 9.32583 34.6033 9.01443C34.4743 8.70304 34.1704 8.5 33.8334 8.5H5.83336Z" fill="#FF633E"></path></svg>
+                <div>
+                    <span>Почта</span>
+                    <p th:text="${email}"></p>
+                </div>
+            </a>
+        </div>
+        <!-- Адрес -->
+        <div class="contact-item" th:if="${address != null and !#strings.isEmpty(address)}">
+            <a class="contact-link">
+                <svg width="40" height="41" viewBox="0 0 40 41" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M21.1001 5.90092C20.4926 5.29344 19.5076 5.29344 18.9002 5.90092L8.01128 16.7898C7.71955 17.0815 7.55566 17.4772 7.55566 17.8898V31.8898C7.55566 34.4671 9.645 36.5564 12.2223 36.5564H27.7779C30.3552 36.5564 32.4446 34.4671 32.4446 31.8898V17.8898C32.4446 17.4772 32.2807 17.0815 31.9889 16.7898L21.1001 5.90092Z" fill="#FF633E66"></path><path fill-rule="evenodd" clip-rule="evenodd" d="M18.9393 5.93934C19.5251 5.35355 20.4749 5.35355 21.0607 5.93934L35.0607 19.9393C35.6464 20.5251 35.6464 21.4749 35.0607 22.0607C34.4749 22.6464 33.5251 22.6464 32.9393 22.0607L20 9.12132L7.06066 22.0607C6.47487 22.6464 5.52513 22.6464 4.93934 22.0607C4.35355 21.4749 4.35355 20.5251 4.93934 19.9393L18.9393 5.93934Z" fill="#FF633E"></path></svg>
+                <div>
+                    <span>Домашний адрес</span>
+                    <p th:text="${address}"></p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Социальные сети -->
+    <div class="social-networks" th:if="${socialNetworks != null}">
+        <h3 class="social-title">Социальные сети</h3>
+
+        <div th:each="social : ${socialNetworks}">
+            <a class="social-link" th:href="${social.link}" target="_blank" th:text="${social.name}">Social</a>
+        </div>
+    </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Электронная визитка</title>
+    <!-- Подключаем Bootstrap для красивого оформления -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: #f8f9fa;
+            padding: 20px;
+        }
+        .card {
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            font-size: 1.5rem;
+            padding: 20px;
+        }
+        .card-body {
+            padding: 20px;
+        }
+        .field-label {
+            font-weight: bold;
+        }
+        .field-value {
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body>
+<div class="card">
+    <!-- Заголовок визитки: выводим fullName и surname, только если хотя бы одно из них не пустое -->
+    <div class="card-header" th:if="${(fullName != null and !#strings.isEmpty(fullName)) or (surname != null and !#strings.isEmpty(surname))}">
+        <span th:text="${fullName}">Имя</span>
+        <span th:text="${surname}">Фамилия</span>
+    </div>
+    <div class="card-body">
+        <!-- Должность -->
+        <div th:if="${position != null and !#strings.isEmpty(position)}" class="field-value">
+            <div class="field-label">Должность:</div>
+            <div th:text="${position}"></div>
+        </div>
+        <!-- Номер телефона -->
+        <div th:if="${phoneNumber != null and !#strings.isEmpty(phoneNumber)}" class="field-value">
+            <div class="field-label">Телефон:</div>
+            <div th:text="${phoneNumber}"></div>
+        </div>
+        <!-- Email -->
+        <div th:if="${email != null and !#strings.isEmpty(email)}" class="field-value">
+            <div class="field-label">Email:</div>
+            <div th:text="${email}"></div>
+        </div>
+        <!-- Степень -->
+        <div th:if="${degree != null and !#strings.isEmpty(degree)}" class="field-value">
+            <div class="field-label">Степень:</div>
+            <div th:text="${degree}"></div>
+        </div>
+        <!-- О себе -->
+        <div th:if="${aboutMe != null and !#strings.isEmpty(aboutMe)}" class="field-value">
+            <div class="field-label">О себе:</div>
+            <div th:text="${aboutMe}"></div>
+        </div>
+        <!-- Адрес -->
+        <div th:if="${address != null and !#strings.isEmpty(address)}" class="field-value">
+            <div class="field-label">Адрес:</div>
+            <div th:text="${address}"></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
