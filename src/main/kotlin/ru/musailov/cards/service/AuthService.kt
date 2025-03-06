@@ -5,6 +5,7 @@ import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.stereotype.Service
 import ru.musailov.cards.auth.JwtUtil
+import ru.musailov.cards.dto.SendVerificationCodeResponse
 import ru.musailov.cards.model.EmailVerificationCode
 import ru.musailov.cards.model.User
 import ru.musailov.cards.repository.EmailVerificationCodeRepository
@@ -21,10 +22,7 @@ class AuthService(
 ) {
 
     @Transactional
-    /**
-     * Генерирует код подтверждения, сохраняет его для пользователя и отправляет email.
-     */
-    fun sendVerificationCode(email: String) {
+    fun sendVerificationCode(email: String): SendVerificationCodeResponse {
         val code = UUID.randomUUID().toString().substring(0, 6) // например, 6-символьный код
         val user = userRepository.findByEmail(email) ?: User(email = email)
         emailCodeRepo.deleteByEmail(email)
@@ -32,6 +30,7 @@ class AuthService(
         userRepository.save(user)
         emailCodeRepo.save(verificationCode)
         sendEmail(email, code)
+        return SendVerificationCodeResponse(email, "Код подтверждения отправлен на указанный email")
     }
 
     private fun sendEmail(email: String, code: String) {

@@ -32,7 +32,7 @@ data class CardEntity(
     @OneToOne(mappedBy = "card", cascade = [CascadeType.ALL])
     val cardLink: CardLinkEntity? = null,
 
-    @OneToMany(mappedBy = "card")
+    @OneToMany(mappedBy = "card", cascade = [CascadeType.ALL])
     val socialNetworks: List<SocialNetwork>? = emptyList(),
 
     @OneToOne(mappedBy = "card", orphanRemoval = true, cascade = [CascadeType.ALL])

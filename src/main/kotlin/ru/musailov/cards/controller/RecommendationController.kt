@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.musailov.cards.dto.CardDto
-import ru.musailov.cards.model.GenerateTextResponse
+import ru.musailov.cards.dto.GenerateTextResponseDto
 import ru.musailov.cards.service.TextRecommendService
 
 @RestController
@@ -15,7 +15,7 @@ class RecommendationController(
 ) {
 
     @PostMapping("/generate-about-me")
-    fun generateAboutMe(@RequestBody cardDto: CardDto): GenerateTextResponse? {
+    fun generateAboutMe(@RequestBody cardDto: CardDto): GenerateTextResponseDto? {
         return recommendService.generateText(cardDto)
     }
 }

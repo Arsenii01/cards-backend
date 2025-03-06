@@ -13,7 +13,7 @@ class CardLandingController(
     private val cardLandingService: CardLandingService
 ) {
 
-    @GetMapping("/{id}")
+    @GetMapping("/{id}", produces = ["text/html;charset=UTF-8"])
     fun getCardLandingPage(@PathVariable("id") landingId: String): ResponseEntity<String> {
         return ResponseEntity.ok(cardLandingService.generateLanding(landingId))
     }

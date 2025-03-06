@@ -5,6 +5,7 @@ import org.springframework.http.MediaType
 import org.springframework.stereotype.Service
 import org.springframework.web.client.RestClient
 import ru.musailov.cards.dto.CardDto
+import ru.musailov.cards.dto.GenerateTextResponseDto
 import ru.musailov.cards.model.*
 
 @Service
@@ -31,10 +32,10 @@ class TextRecommendService {
     val requestTask = "Тебе будет дана информация о клиенте, который хочет заполнить поле \"О себе\" в электронной визитке " +
             " Все исходные данные в тексте использовать не обязательно" +
             " Некоторые данные могут быть пропущены (null)." +
-            " Длина текста от 2 до 6 предложений." +
+            " Длина текста от 2 до 4 предложений." +
             " Текст должен быть написан от первого лица, быть стильным и продающим, не содержать имени/фамилии/отчества. \n\n"
 
-    fun generateText(cardDto: CardDto): GenerateTextResponse? {
+    fun generateText(cardDto: CardDto): GenerateTextResponseDto? {
 
         val companyInfo = cardDto.companyInfo
         val userText = requestTask +
@@ -53,7 +54,7 @@ class TextRecommendService {
         )
 
         println(request)
-        val result = defaultClient
+        val response = defaultClient
             .post()
             .uri("https://llm.api.cloud.yandex.net/foundationModels/v1/completion")
             .header("Authorization", "Bearer $token")
@@ -62,8 +63,7 @@ class TextRecommendService {
             .retrieve()
             .body(GenerateTextResponse::class.java)
 
-        println(result)
-        return result
-
+        println(response)
+        return GenerateTextResponseDto(response!!.result.alternatives[0].message.text!!)
     }
 }

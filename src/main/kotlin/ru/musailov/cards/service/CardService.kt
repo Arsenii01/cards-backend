@@ -30,7 +30,7 @@ class CardService(
 
     @Transactional
     fun createCard(cardDto: CardDto) {
-        val userEmail = SecurityContextHolder.getContext().getAuthentication().getPrincipal()
+        val userEmail = SecurityContextHolder.getContext().authentication.principal
         val user = userRepository.findByEmail(userEmail as String)
         val card = cardDto.toEntity()
         card.user = user

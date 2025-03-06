@@ -7,7 +7,8 @@ data class CompanyInfoDto(
     val businessLine: String? = null,
     val phoneNumber: String? = null,
     val email: String? = null,
-    val companyWebsite: String? = null
+    val companyWebsite: String? = null,
+    val address: String? = null
 )
 
 fun CompanyInfoEntity.toDto() =
@@ -16,5 +17,6 @@ fun CompanyInfoEntity.toDto() =
         businessLine = this.businessLine,
         phoneNumber = this.phoneNumber,
         email = this.email,
-        companyWebsite = this.companyWebsite
+        companyWebsite = this.companyWebsite,
+        address = this.address
     )

@@ -28,7 +28,6 @@ class JwtAuthenticationFilter(
             val token = authHeader.substring(7)
             val email = jwtUtil.getEmailFromToken(token)
             if (email != null) {
-                // Если пользователь существует, устанавливаем аутентификацию
                 val user = userRepository.findByEmail(email)
                 if (user != null) {
                     val authentication = UsernamePasswordAuthenticationToken(

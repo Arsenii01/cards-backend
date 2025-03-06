@@ -6,7 +6,6 @@ import org.thymeleaf.spring6.SpringTemplateEngine
 import ru.musailov.cards.exception.NotFoundException
 import ru.musailov.cards.model.CardEntity
 import ru.musailov.cards.repository.CardLinkRepository
-import ru.musailov.cards.repository.CardRepository
 import kotlin.jvm.optionals.getOrElse
 
 @Service
@@ -27,7 +26,7 @@ class CardLandingService(
 
     private fun generateCardLanding(cardEntity: CardEntity): String {
         val context = createContext(cardEntity)
-        val htmlContent = templateEngine.process("card-template2", context)
+        val htmlContent = templateEngine.process("card-template3", context)
 
         return htmlContent
     }
@@ -42,6 +41,7 @@ class CardLandingService(
             setVariable("aboutMe", cardEntity.aboutMe)
             setVariable("address", cardEntity.address)
             setVariable("socialNetworks", cardEntity.socialNetworks)
+            setVariable("companyInfo", cardEntity.companyInfoEntity)
         }
         return context
     }
