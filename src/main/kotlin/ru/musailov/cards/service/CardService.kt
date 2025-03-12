@@ -94,21 +94,6 @@ class CardService(
             modifiedDate = LocalDateTime.now()
         )
     }
-//    private fun generateCardLanding(cardEntity: CardEntity) {
-//        val context = createContext(cardEntity)
-//        val htmlContent = templateEngine.process("card-template", context)
-//
-//        val path = Paths.get(Paths.get("").toAbsolutePath().toString() + LANDING_PATH + "card-${cardEntity.cardId}.html")
-//        Files.write(path, htmlContent.toByteArray())
-//    }
-//    private fun createContext(cardEntity: CardEntity) : Context {
-//        val context = Context().apply {
-//            setVariable("fullName", cardEntity.fullName)
-//            setVariable("surname", cardEntity.surname)
-//        }
-//        return context
-//    }
-
     private fun generateCardId(): String {
         val charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
         return (1..8)

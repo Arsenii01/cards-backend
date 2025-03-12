@@ -24,6 +24,7 @@ class SecurityConfig(
             .authorizeHttpRequests{ req -> req
                 .requestMatchers(HttpMethod.OPTIONS,"/**").permitAll()
                 .requestMatchers("/auth/**", "/card-landing/**").permitAll()
+                .requestMatchers("/swagger-ui/**", "/swagger-ui/index.html",  "/v3/api-docs/**",  "/swagger-resources/**", "/swagger-resources").permitAll()
                 .anyRequest().authenticated()
             }
             .sessionManagement{ it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }

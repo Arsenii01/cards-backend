@@ -13,7 +13,7 @@ data class EmailVerificationCode(
     val email: String,
 
     @Column(nullable = false)
-    val code: String,
+    val code: Int,
 
     val createdDate: LocalDateTime = LocalDateTime.now(),
 

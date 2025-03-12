@@ -36,7 +36,6 @@ class TextRecommendService {
             " Текст должен быть написан от первого лица, быть стильным и продающим, не содержать имени/фамилии/отчества. \n\n"
 
     fun generateText(cardDto: CardDto): GenerateTextResponseDto? {
-
         val companyInfo = cardDto.companyInfo
         val userText = requestTask +
             "Должность/род занятий клиента: ${cardDto.position}; " +
@@ -53,7 +52,6 @@ class TextRecommendService {
             )
         )
 
-        println(request)
         val response = defaultClient
             .post()
             .uri("https://llm.api.cloud.yandex.net/foundationModels/v1/completion")
@@ -63,7 +61,6 @@ class TextRecommendService {
             .retrieve()
             .body(GenerateTextResponse::class.java)
 
-        println(response)
         return GenerateTextResponseDto(response!!.result.alternatives[0].message.text!!)
     }
 }
